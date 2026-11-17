@@ -1,0 +1,16 @@
+[phases.setup]
+phpPkgs = ["pdo_mysql", "mbstring", "openssl", "bcmath", "curl", "zip"]
+nodePkgs = ["nodejs"] # নোড পিকেজি যুক্ত করা হলো যেন npm বিল্ড করা যায়
+
+[phases.build]
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "npm install",
+    "npm run build",
+    "php artisan config:cache",
+    "php artisan route:cache",
+    "php artisan view:cache"
+]
+
+[start]
+cmd = "php artisan config:clear && php -S 0.0.0.0:$PORT -t public"
